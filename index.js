@@ -20,7 +20,7 @@ app.use(exp.static('web'));
 app.use(exp.json());
 
 app.get('/config', (req, res) => {
-	res.sendFile(__dirname + '/config.json');
+	res.status(200).sendFile(__dirname + '/config.json');
 });
 
 app.post('/config', (req, res) => {
@@ -40,7 +40,7 @@ app.post('/config', (req, res) => {
 });
 
 app.post('/update', (req, res) => {
-	exec(__dirname + '/scripts/update.sh', err => {
+	exec('sh ' + __dirname + '/scripts/update.sh', err => {
 		if (err) {
 			console.error(err);
 			res.status(500).send(err);
