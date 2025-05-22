@@ -4,7 +4,7 @@ const piosk = {
 		$('#page_timeout').val(data.page_timeout);
 	},
 	renderInfo(data) {
-		$('#hostname').val(data.hostname);
+		$('#hostname').text(data.hostname);
 		let interfaces = data.ip;
 		let ip="";
 
@@ -30,7 +30,7 @@ const piosk = {
 	},
 	renderTVStatus(data) {
 		$('#controller').show();
-		$('#power').val(data.powerStatus);
+		$('#power').text(data.powerStatus);
 	},
 	refreshTVStatus() {
 		$.getJSON('/tv/status')
