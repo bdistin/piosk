@@ -1,5 +1,5 @@
 [Unit]
-Description=Launch PiOSK switcher to switch tabs
+Description=Launch PiOSK switcher to refresh tabs
 After=piosk-runner.service
 
 [Service]

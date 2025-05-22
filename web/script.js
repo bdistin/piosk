@@ -1,62 +1,84 @@
-let piosk = {
-  addNewUrl () {
-    let newUrl = $('#new-url').val()
-    if (!newUrl) return
+const piosk = {
+	renderPage(data) {
+		$('#url').val(data.url);
+		$('#page_timeout').val(data.page_timeout);
+	},
+	renderInfo(data) {
+		$('#hostname').val(data.hostname);
+		$('#power').val(data.tv.powerStatus);
+		let interfaces = data.ip;
+		let ip="";
 
-    piosk.appendUrl(newUrl)
-    $('#new-url').val('')
-  },
-  appendUrl (url) {
-    let tmpUrl = $('#template-url').contents().clone()
+		for(const [interface, data] of Object.entries(interfaces)){
+			if(/^(eth|en|wlan)/.test(interface)){
+				data.forEach(element => {
+					if(element.family === "IPv4"){
+						$('#ip').text(element.address);
+						ip=element.address;
+					}
+				});
+			}
+		}
 
-    $(tmpUrl).find('a').attr('href', url).html(url)
-    $('#urls .list-group').append(tmpUrl)
-  },
-  renderPage (data) {
-    $.each(data.urls, (index, item) => {
-      piosk.appendUrl(item.url)
-    })
-
-    $('#page_timeout').val(data.settings.page_timeout);
-  },
-  showStatus (xhr) {
-    let tmpErr = $('#template-err').contents().clone()
-    tmpErr.html(xhr.responseText)
-    $('#urls').append(tmpErr)
-    setTimeout(_ => { $('.alert-danger').remove() }, 5000)
-  }
-}
+		new QRCode("qrcode", {
+				text: `http://${ip}`,
+				width: 300,
+				height: 300,
+				colorDark : "#FFFFFF",
+				colorLight : "rgb(33, 37, 41)",
+				correctLevel : QRCode.CorrectLevel.H
+		});
+	},
+	renderTVStatus(data) {
+		$('#controller').show();
+		$('#power').val(data.tv.powerStatus);
+	},
+	refreshTVStatus() {
+		$.getJSON('/tv/status')
+			.done(piosk.renderTVStatus);		
+	},
+	showStatus(xhr) {
+		let tmpErr = $('#template-err').contents().clone();
+		tmpErr.html(xhr.responseText);
+		$('#settings').append(tmpErr);
+		setTimeout(_ => { $('.alert-danger').remove() }, 5000);
+	}
+};
 
 $(document).ready(() => {
-  $.getJSON('/config')
-  .done(piosk.renderPage)
-  .fail(piosk.showStatus)
+	$.getJSON('/config')
+		.done(piosk.renderPage)
+		.fail(piosk.showStatus);
 
-  $('#add-url').on('click', piosk.addNewUrl)
-  $('#new-url').on('keyup', (e) => { if (e.key === 'Enter') piosk.addNewUrl() })
+	$.getJSON('/sysinfo')
+		.done(piosk.renderInfo)
+		.fail(piosk.showStatus);
 
-  $('#urls').on('click', 'button.btn-close', (e) => {
-    $(e.target).parent().remove()
-  })
+	setInterval(piosk.refreshTVStatus, 30000);
 
-  $('#execute').on('click', (e) => {
-    let config = {}
-    config.urls = []
-    $('li.list-group-item').each((index, item) => {
-      config.urls.push({ url: $(item).find('a').attr('href') })
-    })
+	$('#execute').on('click', (e) => {
+		const config = {
+			url: $("#url").val(),
+			page_timeout: parseInt($("#page_timeout").val())
+		};
 
-    config.settings={}
-    config.settings.page_timeout=parseInt($("#page_timeout").val())
+		$.ajax({
+			url: '/config',
+			type: 'POST',
+			data: JSON.stringify(config),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: piosk.showStatus,
+			error: piosk.showStatus
+		});
+	});
 
-    $.ajax({
-      url: '/config',
-      type: 'POST',
-      data: JSON.stringify(config),
-      contentType: "application/json; charset=utf-8",
-      dataType: "json",
-      success: piosk.showStatus,
-      error: piosk.showStatus
-    })
-  })
-})
+	$('#toggle-power').on('click', (e) => {
+		$.ajax({
+			url: '/tv/togglepower',
+			type: 'POST',
+			success: piosk.showStatus,
+			error: piosk.showStatus
+		});
+	});
+});
