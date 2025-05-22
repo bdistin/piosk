@@ -31,7 +31,7 @@ const piosk = {
 	},
 	renderTVStatus(data) {
 		$('#controller').show();
-		$('#power').val(data.tv.powerStatus);
+		$('#power').val(data.powerStatus);
 	},
 	refreshTVStatus() {
 		$.getJSON('/tv/status')
