@@ -3,7 +3,7 @@
 # @TODO: fetch the user dynamically or from config
 export XDG_RUNTIME_DIR=/run/user/1000
 
-IDLE_TIMEOUT=$(jq '.page_timeout' /opt/piosk/config.json)
+IDLE_TIMEOUT=$(jq -r '.page_timeout' /opt/piosk/config.json)
 IDLE=$(xprintidle) / 1000
 
 if [ $IDLE -ge $IDLE_TIMEOUT ]; then
