@@ -62,7 +62,7 @@ app.get('/stream', (req, res) => {
 	ffmpeg('/dev/video0') // Replace with your input device
 		.inputFormat('v4l2')
 		.videoCodec('libx264')
-		.preset('ultrafast')
+		.preset('podcast')
 		.outputFormat('mpegts')
 		.on('start', function(commandLine) {
 			console.log('Spawned Ffmpeg with command: ' + commandLine);
