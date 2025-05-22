@@ -57,13 +57,13 @@ app.get('/sysinfo', (req, res) => {
 });
 
 app.get('/stream', (req, res) => {
-	res.set('Content-Type', 'video/mpeg'); // Or 'video/mpeg' depending on output format
+	res.set('Content-Type', 'video/webm'); // Or 'video/mpeg' depending on output format
 
 	ffmpeg('/dev/video0') // Replace with your input device
 		.inputFormat('v4l2')
 		.videoCodec('libx264')
-		.preset('podcast')
-		.outputFormat('mpegts')
+        .audioCodec('aac')
+        .outputFormat('webm') // or mp4, flv, etc.
 		.on('start', function(commandLine) {
 			console.log('Spawned Ffmpeg with command: ' + commandLine);
 		})
