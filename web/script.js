@@ -81,4 +81,13 @@ $(document).ready(() => {
 			error: piosk.showStatus
 		});
 	});
+
+	$('#update').on('click', (e) => {
+		$.ajax({
+			url: '/update',
+			type: 'POST',
+			success: piosk.showStatus,
+			error: piosk.showStatus
+		});
+	});
 });

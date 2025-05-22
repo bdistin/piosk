@@ -39,6 +39,16 @@ app.post('/config', (req, res) => {
 	});
 });
 
+app.post('/update', (req, res) => {
+	exec(__dirname + '/scripts/update.sh', err => {
+		if (err) {
+			console.error(err);
+			res.status(500).send('Could not update. Retry or reboot manually.');
+		}
+		res.status(200).send('New update applied; rebooting for changes to take effect...');
+	});
+});
+
 app.get('/sysinfo', (req, res) => {
 	res.json({
 		hostname: os.hostname(),
