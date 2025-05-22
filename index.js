@@ -57,7 +57,7 @@ app.get('/sysinfo', (req, res) => {
 });
 
 app.get('/stream', (req, res) => {
-	res.set('Content-Type', 'video/mp4'); // Or 'video/mpeg' depending on output format
+	res.set('Content-Type', 'video/mpeg'); // Or 'video/mpeg' depending on output format
 
 	ffmpeg('/dev/video0') // Replace with your input device
 		.inputFormat('v4l2')
