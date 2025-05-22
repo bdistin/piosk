@@ -20,7 +20,7 @@ app.use(exp.static('web'));
 app.use(exp.json());
 
 app.get('/config', (req, res) => {
-	res.status(200).sendFile(__dirname + '/config.json');
+	res.sendFile(__dirname + '/config.json');
 });
 
 app.post('/config', (req, res) => {
