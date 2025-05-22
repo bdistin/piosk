@@ -40,7 +40,7 @@ app.post('/config', (req, res) => {
 });
 
 app.post('/update', (req, res) => {
-	exec('sh ' + __dirname + '/scripts/update.sh', err => {
+	exec('sudo ' + __dirname + '/scripts/update.sh', err => {
 		if (err) {
 			console.error(err);
 			res.status(500).send(err);
