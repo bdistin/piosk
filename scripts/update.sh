@@ -24,6 +24,8 @@ echo -e "${INFO}Updating Repo...${RESET}"
 cd $PIOSK_DIR
 git pull
 
+npm i
+
 echo -e "${INFO}Installing PiOSK services...${RESET}"
 PI_USER="$SUDO_USER"
 PI_SUID=$(id -u "$SUDO_USER")
@@ -50,7 +52,7 @@ echo -e "${INFO}Enabling PiOSK daemons...${RESET}"
 systemctl enable piosk-runner
 systemctl enable piosk-switcher
 systemctl enable piosk-dashboard
-systemctl enable piosk-video
+systemctl disable piosk-video
 systemctl enable piosk-wlan0pwr
 
 echo -e "${INFO}Starting PiOSK daemons...${RESET}"
@@ -58,7 +60,7 @@ echo -e "${INFO}Starting PiOSK daemons...${RESET}"
 # systemctl start piosk-runner
 # systemctl start piosk-switcher
 systemctl start piosk-dashboard
-systemctl start piosk-video
+#systemctl start piosk-video
 
 echo -e "${SUCCESS}\tUpdate done! Restarting...${RESET}"
 reboot

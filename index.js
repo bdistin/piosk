@@ -1,5 +1,5 @@
 const exp = require('express');
-const stream = require('node-rtsp-stream');
+const ffmpeg = require('fluent-ffmpeg');
 const Cec = require('cec-controller');
 const { exec } = require('child_process');
 const nfs = require('fs');
@@ -10,7 +10,7 @@ const cec = new Cec();
 let tv = null;
 
 cec.on('ready', controller => {
-	tv = cont.dev0;
+	tv = controller.dev0;
 });
 cec.on('error', console.error);
 
@@ -57,18 +57,22 @@ app.get('/sysinfo', (req, res) => {
 });
 
 app.get('/stream', (req, res) => {
-	const myStream = new stream({
-		name: 'streamName',
-		streamUrl: 'udp://127.0.0.1:1234', // URL where ffmpeg is streaming to
-		wsPort: 9999, // port for websocket stream
-		ffmpegOptions: { // Options for ffmpeg
-		  '-stats': '', // an option with no argument
-		  '-r': 30,
-		  '-f': 'mpegts',
-		},
-	  });
-	
-	myStream.pipe(res); 
+	res.set('Content-Type', 'video/mp4'); // Or 'video/mpeg' depending on output format
+
+	ffmpeg('/dev/video0') // Replace with your input device
+		.inputFormat('v4l2')
+		.videoCodec('libx264')
+		.preset('ultrafast')
+		.outputFormat('mpegts')
+		.on('start', function(commandLine) {
+			console.log('Spawned Ffmpeg with command: ' + commandLine);
+		})
+		.on('error', function(err, stdout, stderr) {
+			console.log('Error: ', err);
+			console.log('ffmpeg stdout: ', stdout);
+			console.log('ffmpeg stderr: ', stderr);
+		})
+		.pipe(res, { end: true });
 });
 
 app.get('/tv/status', (req, res) => {
