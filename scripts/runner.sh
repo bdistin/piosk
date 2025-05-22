@@ -1,6 +1,6 @@
 #!/bin/bash
 chromium-browser \
-	$(jq -r '.url' /opt/piosk/config.json) \
+	$(jq '.url' /opt/piosk/config.json) \
 	--disable-component-update \
 	--disable-composited-antialiasing \
 	--disable-gpu-driver-bug-workarounds \
