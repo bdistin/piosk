@@ -35,7 +35,7 @@ else
 fi
 
 echo -e "${INFO}Installing dependencies...${RESET}"
-apt install -y git jq wtype nodejs npm xprintidle ffmpeg cec-client cec-utils
+apt install -y git jq wtype nodejs npm xprintidle ffmpeg cec-utils
 
 echo -e "${INFO}Cloning repository...${RESET}"
 git clone https://github.com/bdistin/piosk.git "$PIOSK_DIR"
