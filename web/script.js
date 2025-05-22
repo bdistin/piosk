@@ -5,7 +5,6 @@ const piosk = {
 	},
 	renderInfo(data) {
 		$('#hostname').val(data.hostname);
-		$('#power').val(data.tv.powerStatus);
 		let interfaces = data.ip;
 		let ip="";
 
