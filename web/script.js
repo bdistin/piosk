@@ -49,11 +49,11 @@ $(document).ready(() => {
 		.done(piosk.renderPage)
 		.fail(piosk.showStatus);
 
-	$.getJSON('/sysinfo')
-		.done(piosk.renderInfo)
-		.fail(piosk.showStatus);
+	//$.getJSON('/sysinfo')
+	//	.done(piosk.renderInfo)
+	//	.fail(piosk.showStatus);
 
-	setInterval(piosk.refreshTVStatus, 30000);
+	// setInterval(piosk.refreshTVStatus, 30000);
 
 	$('#execute').on('click', (e) => {
 		const config = {
