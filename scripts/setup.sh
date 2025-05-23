@@ -35,11 +35,14 @@ else
 fi
 
 echo -e "${INFO}Installing dependencies...${RESET}"
-apt install -y git jq wtype nodejs npm xprintidle imagemagick
+apt install -y git jq wtype nodejs npm xprintidle libcap2-bin
 
 echo -e "${INFO}Cloning repository...${RESET}"
 git clone https://github.com/bdistin/piosk.git "$PIOSK_DIR"
 cd "$PIOSK_DIR"
+
+echo -e "${INFO}Allowing Node to bind port 80 without SUDO...${RESET}"
+setcap cap_net_bind_service=+ep `readlink -f \`which node\`` 
 
 # echo -e "${INFO}Checking out latest release...${RESET}"
 # git checkout devel
@@ -72,7 +75,11 @@ sed -e "s|PI_HOME|$PI_HOME|g" \
 	-e "s|PI_USER|$PI_USER|g" \
 	"$PIOSK_DIR/services/piosk-switcher.template" > "/etc/systemd/system/piosk-switcher.service"
 
-cp "$PIOSK_DIR/services/piosk-dashboard.template" /etc/systemd/system/piosk-dashboard.service
+sed -e "s|PI_HOME|$PI_HOME|g" \
+	-e "s|PI_SUID|$PI_SUID|g" \
+	-e "s|PI_USER|$PI_USER|g" \
+	"$PIOSK_DIR/services/piosk-dashboard.template" > "/etc/systemd/system/piosk-dashboard.service"
+
 cp "$PIOSK_DIR/services/piosk-wlan0pwr.template" /etc/systemd/system/piosk-wlan0pwr.service
 
 echo -e "${INFO}Reloading systemd daemons...${RESET}"

@@ -1,6 +1,6 @@
 const exp = require('express');
 //const Cec = require('cec-controller');
-const { exec, spawn } = require('child_process');
+const { exec } = require('child_process');
 const nfs = require('fs');
 const os = require('os');
 
@@ -39,7 +39,7 @@ app.post('/config', (req, res) => {
 });
 
 app.post('/update', (req, res) => {
-	exec('sudo ' + __dirname + '/scripts/update.sh', (err, stdout) => {
+	exec(__dirname + '/scripts/update.sh', (err, stdout) => {
 		if (err) {
 			console.error(err);
 			res.status(500).send(err);
@@ -49,7 +49,7 @@ app.post('/update', (req, res) => {
 });
 
 app.get('/desktop', (req, res) => {
-	const child = exec('grim /home/admin/screenshot.png', { uid: 1000, gid: 1000 }, (err) => {
+	const child = exec('grim /home/admin/screenshot.png', (err) => {
 		if (err) {
 			console.error(err);
 			res.status(500).send(err);
