@@ -33,7 +33,11 @@ sed -e "s|PI_HOME|$PI_HOME|g" \
 	-e "s|PI_USER|$PI_USER|g" \
 	"$PIOSK_DIR/services/piosk-switcher.template" > "/etc/systemd/system/piosk-switcher.service"
 
-cp "$PIOSK_DIR/services/piosk-dashboard.template" /etc/systemd/system/piosk-dashboard.service
+sed -e "s|PI_HOME|$PI_HOME|g" \
+	-e "s|PI_SUID|$PI_SUID|g" \
+	-e "s|PI_USER|$PI_USER|g" \
+	"$PIOSK_DIR/services/piosk-dashboard.template" > "/etc/systemd/system/piosk-dashboard.service"
+
 cp "$PIOSK_DIR/services/piosk-wlan0pwr.template" /etc/systemd/system/piosk-wlan0pwr.service
 
 echo -e "Reloading systemd daemons..."
