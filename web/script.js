@@ -60,7 +60,7 @@ function isValidURL(string) {
 }
 
 function isIntegerString(string) {
-  if (typeof str !== 'string') {
+  if (typeof string !== 'string') {
     return false;
   }
    if (string.trim() === '') {
