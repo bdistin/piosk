@@ -28,7 +28,7 @@ app.post('/config', (req, res) => {
 			console.error(err);
 			res.status(500).send('Could not save config.');
 		}
-		exec('reboot', err => {
+		exec('sudo reboot', err => {
 			if (err) {
 				console.error(err);
 				res.status(500).send('Could not reboot to apply config. Retry or reboot manually.');
