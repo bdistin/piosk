@@ -28,6 +28,16 @@ const piosk = {
 				correctLevel : QRCode.CorrectLevel.H
 		});
 	},
+	refreshDesktop() {
+		const timestamp = new Date().getTime();
+    	const imageElement = $('#desktop');
+    	const currentSrc = imageElement.attr('src');
+    
+    	//Remove existing query parameters
+    	const cleanSrc = currentSrc.split('?')[0];
+    
+    	imageElement.attr('src', cleanSrc + '?' + timestamp);
+	},
 	renderTVStatus(data) {
 		$('#controller').show();
 		$('#power').text(data.powerStatus);
@@ -79,7 +89,7 @@ $(document).ready(() => {
 		.done(piosk.renderInfo)
 		.fail(piosk.showErr);
 
-	// setInterval(piosk.refreshTVStatus, 30000);
+	setInterval(piosk.refreshDesktop, 30000);
 
 	$('#execute').on('click', (e) => {
 		if (!isValidURL($("#url").val())) {
