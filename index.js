@@ -44,7 +44,7 @@ app.get('/update', (req, res) => {
 			console.error(err);
 			res.status(500).send(err);
 		}
-		res.json(JSON.stringify({ status: stdout }));
+		res.json({ status: stdout });
 	});
 });
 
