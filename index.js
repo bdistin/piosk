@@ -1,6 +1,7 @@
 const exp = require('express');
 const Cec = require('cec-controller');
-const { exec, spawn } = require('child_process');
+const screenshot = require('screenshot-desktop-wayland');
+const { exec } = require('child_process');
 const nfs = require('fs');
 const os = require('os');
 
@@ -48,41 +49,19 @@ app.post('/update', (req, res) => {
 	});
 });
 
+app.post('/desktop', (req, res) => {
+	screenshot().then(img => {
+		res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+    	img.pipe(res);
+	})
+});
+
 app.get('/sysinfo', (req, res) => {
 	res.json({
 		hostname: os.hostname(),
 		ip: os.networkInterfaces()
 	});
 });
-
-
-/*app.get('/stream', (req, res) => {
-    res.setHeader('Content-Type', 'video/webm');
-    const ffmpeg = spawn('ffmpeg', [
-        '-f', 'x11grab',
-        '-video_size', '1920x1080', // Adjust as needed
-        '-framerate', '30',
-        '-i', ':0.0',
-        '-c:v', 'libvpx-vp9',
-        '-b:v', '2M',
-        '-maxrate', '2M',
-        '-bufsize', '4M',
-        '-f', 'webm',
-        '-an', // No audio
-        '-'
-    ]);
-
-    ffmpeg.stdout.pipe(res);
-
-    ffmpeg.stderr.on('data', (data) => {
-        console.error(`FFmpeg stderr: ${data}`);
-    });
-
-    ffmpeg.on('close', (code) => {
-        console.log(`FFmpeg process exited with code ${code}`);
-        res.end();
-    });
-});*/
 
 app.get('/tv/status', (req, res) => {
 	res.json({ ...tv });

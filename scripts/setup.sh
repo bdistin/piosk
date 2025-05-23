@@ -35,7 +35,7 @@ else
 fi
 
 echo -e "${INFO}Installing dependencies...${RESET}"
-apt install -y git jq wtype nodejs npm xprintidle ffmpeg
+apt install -y git jq wtype nodejs npm xprintidle imagemagick
 
 echo -e "${INFO}Cloning repository...${RESET}"
 git clone https://github.com/bdistin/piosk.git "$PIOSK_DIR"
