@@ -49,7 +49,7 @@ app.post('/update', (req, res) => {
 	});
 });
 
-app.post('/desktop', (req, res) => {
+app.get('/desktop', (req, res) => {
 	screenshot().then(img => {
 		res.writeHead(200, { 'Content-Type': 'image/jpeg' });
     	img.pipe(res);
