@@ -50,8 +50,8 @@ app.post('/update', (req, res) => {
 
 app.get('/desktop', (req, res) => {
 	const child = spawn('grim ~/screenshot.png');
-	child.on('error', res.status(500).send)
-	child.on('close', () => res.sendFile('~/screenshot.png'))
+	child.on('error', () => res.status(500).send('error taking screenshot'));
+	child.on('close', () => res.sendFile('~/screenshot.png'));
 });
 
 app.get('/sysinfo', (req, res) => {
