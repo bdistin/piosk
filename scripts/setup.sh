@@ -35,6 +35,7 @@ else
 fi
 
 echo -e "${INFO}Installing dependencies...${RESET}"
+apt update
 apt install -y git jq wtype nodejs npm xprintidle libcap2-bin
 
 echo -e "${INFO}Cloning repository...${RESET}"
