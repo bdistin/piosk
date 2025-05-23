@@ -49,24 +49,13 @@ app.post('/update', (req, res) => {
 });
 
 app.get('/desktop', (req, res) => {
-  const grimProcess = spawn('grim', ['-']);  // `-` outputs to stdout
-
-  // Set the appropriate Content-Type header for the image
-  res.setHeader('Content-Type', 'image/png');
-
-  // Pipe the output of grim to the Express response
-  grimProcess.stdout.pipe(res);
-
-  grimProcess.stderr.on('data', (data) => {
-    console.error(`grim stderr: ${data}`); // Handle grim errors
-  });
-
-  grimProcess.on('close', (code) => {
-    if (code !== 0) {
-      console.error(`grim process exited with code ${code}`);
-      res.status(500).send('Error taking screenshot');
-    }
-  });
+	exec('grim ./screenshot.png', err => {
+		if (err) {
+			console.error(err);
+			res.status(500).send('Could take screenshot.');
+		}
+		res.sendFile('./screenshot.png');
+	});
 });
 
 app.get('/sysinfo', (req, res) => {
