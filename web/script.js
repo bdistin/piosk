@@ -49,13 +49,13 @@ const piosk = {
 	showErr(xhr) {
 		let tmpErr = $('#template-err').contents().clone();
 		tmpErr.html(typeof xhr === 'string' ? xhr : xhr.responseText);
-		$('#settings').append(tmpErr);
+		$('#screen').append(tmpErr);
 		setTimeout(_ => { $('.alert-danger').remove() }, 5000);
 	},
 	showSuc(xhr) {
 		let tmpErr = $('#template-suc').contents().clone();
 		tmpErr.html(typeof xhr === 'string' ? xhr : xhr.responseText);
-		$('#settings').append(tmpErr);
+		$('#screen').append(tmpErr);
 		setTimeout(_ => { $('.alert-success').remove() }, 5000);
 	}
 };

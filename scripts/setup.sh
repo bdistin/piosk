@@ -60,7 +60,7 @@ if [ ! -f /opt/piosk/config.json ]; then
 	if [ -f /opt/piosk.config.bak ]; then
 		mv /opt/piosk.config.bak /opt/piosk/config.json
 	else
-		mv config.json.sample config.json
+		cp config.json.sample config.json
 	fi
 fi
 
