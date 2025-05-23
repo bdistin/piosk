@@ -59,7 +59,7 @@ app.get('/sysinfo', (req, res) => {
 
 
 app.get('/stream', (req, res) => {
-	request.get('http://localhost:8080').pipe(res);
+	request('http://localhost:8080').pipe(res);
 });
 
 app.get('/tv/status', (req, res) => {
