@@ -39,12 +39,12 @@ app.post('/config', (req, res) => {
 });
 
 app.post('/update', (req, res) => {
-	exec('sudo ' + __dirname + '/scripts/update.sh', err => {
+	exec('sudo ' + __dirname + '/scripts/update.sh', (err, stdout) => {
 		if (err) {
 			console.error(err);
 			res.status(500).send(err);
 		}
-		res.status(200).send('New update applied; rebooting for changes to take effect...');
+		res.status(200).send(stdout);
 	});
 });
 
