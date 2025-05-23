@@ -49,9 +49,9 @@ app.post('/update', (req, res) => {
 });
 
 app.get('/desktop', (req, res) => {
-	const child = spawn('grim ~/screenshot.png');
+	const child = spawn('grim /usr/admin/screenshot.png');
 	child.on('error', () => res.status(500).send('error taking screenshot'));
-	child.on('close', () => res.sendFile('~/screenshot.png'));
+	child.on('close', () => res.sendFile('/usr/admin/screenshot.png'));
 });
 
 app.get('/sysinfo', (req, res) => {
