@@ -50,6 +50,26 @@ const piosk = {
 	}
 };
 
+function isValidURL(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+function isIntegerString(string) {
+  if (typeof str !== 'string') {
+    return false;
+  }
+   if (string.trim() === '') {
+    return false;
+  }
+  const num = Number(string);
+  return Number.isInteger(num);
+}
+
 $(document).ready(() => {
 	$.getJSON('/config')
 		.done(piosk.renderPage)
@@ -62,6 +82,13 @@ $(document).ready(() => {
 	// setInterval(piosk.refreshTVStatus, 30000);
 
 	$('#execute').on('click', (e) => {
+		if (!isValidURL($("#url").val())) {
+			return piosk.showErr('Invalid URL syntax');
+		}
+		if (!isIntegerString($("#page_timeout").val())) {
+			return piosk.showErr('Idle Refresh Timeout must be a valid integer');
+		}
+
 		const config = {
 			url: $("#url").val(),
 			page_timeout: parseInt($("#page_timeout").val())
