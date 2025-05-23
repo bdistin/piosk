@@ -73,7 +73,6 @@ sed -e "s|PI_HOME|$PI_HOME|g" \
 	"$PIOSK_DIR/services/piosk-switcher.template" > "/etc/systemd/system/piosk-switcher.service"
 
 cp "$PIOSK_DIR/services/piosk-dashboard.template" /etc/systemd/system/piosk-dashboard.service
-cp "$PIOSK_DIR/services/piosk-video.template" /etc/systemd/system/piosk-video.service
 cp "$PIOSK_DIR/services/piosk-wlan0pwr.template" /etc/systemd/system/piosk-wlan0pwr.service
 
 echo -e "${INFO}Reloading systemd daemons...${RESET}"
@@ -83,7 +82,6 @@ echo -e "${INFO}Enabling PiOSK daemons...${RESET}"
 systemctl enable piosk-runner
 systemctl enable piosk-switcher
 systemctl enable piosk-dashboard
-systemctl enable piosk-video
 systemctl enable piosk-wlan0pwr
 
 echo -e "${INFO}Starting PiOSK daemons...${RESET}"
@@ -91,7 +89,6 @@ echo -e "${INFO}Starting PiOSK daemons...${RESET}"
 # systemctl start piosk-runner
 # systemctl start piosk-switcher
 systemctl start piosk-dashboard
-systemctl start piosk-video
 
 echo -e "${CALLOUT}\nPiOSK is now installed.${RESET}"
 echo -e "Visit either of these links to access PiOSK dashboard:"

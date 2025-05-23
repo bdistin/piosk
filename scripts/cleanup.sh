@@ -27,21 +27,18 @@ echo -e "${INFO}Stopping PiOSK services...${RESET}"
 systemctl stop piosk-runner
 systemctl stop piosk-switcher
 systemctl stop piosk-dashboard
-systemctl stop piosk-video
 systemctl stop piosk-wlan0pwr
 
 echo -e "${INFO}Disabling PiOSK services...${RESET}"
 systemctl disable piosk-runner
 systemctl disable piosk-switcher
 systemctl disable piosk-dashboard
-systemctl disable piosk-video
 systemctl disable piosk-wlan0pwr
 
 echo -e "${INFO}Removing PiOSK services...${RESET}"
 rm /etc/systemd/system/piosk-runner.service
 rm /etc/systemd/system/piosk-switcher.service
 rm /etc/systemd/system/piosk-dashboard.service
-rm /etc/systemd/system/piosk-video.service
 rm /etc/systemd/system/piosk-wlan0pwr.service
 
 echo -e "${INFO}Reloading systemd daemons...${RESET}"
