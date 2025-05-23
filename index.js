@@ -59,6 +59,7 @@ app.get('/sysinfo', (req, res) => {
 
 
 app.get('/stream', (req, res) => {
+	res.type('video/h264');
 	get('http://localhost:8080', message => message.pipe(res));
 });
 
