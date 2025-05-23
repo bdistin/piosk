@@ -44,7 +44,7 @@ const piosk = {
 			.fail(piosk.renderUpdateStatus);
 	},
 	renderUpdateStatus(data) {
-		$('#update-status').text(data);
+		$('#update-status').text(data.status);
 	},
 	renderTVStatus(data) {
 		$('#controller').show();
