@@ -44,6 +44,9 @@ cd "$PIOSK_DIR"
 echo -e "${INFO}Allowing Node to bind port 80 without SUDO...${RESET}"
 setcap cap_net_bind_service=+ep `readlink -f \`which node\`` 
 
+echo -e "${INFO}Make PiOSK directory writable without SUDO...${RESET}"
+chown -R $USER:$USER $PIOSK_DIR
+
 # echo -e "${INFO}Checking out latest release...${RESET}"
 # git checkout devel
 # git checkout $(git describe --tags $(git rev-list --tags --max-count=1))

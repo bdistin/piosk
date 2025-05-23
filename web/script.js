@@ -61,23 +61,23 @@ const piosk = {
 };
 
 function isValidURL(string) {
-  try {
-    new URL(string);
-    return true;
-  } catch (error) {
-    return false;
-  }
+	try {
+		new URL(string);
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 function isIntegerString(string) {
-  if (typeof string !== 'string') {
-    return false;
-  }
-   if (string.trim() === '') {
-    return false;
-  }
-  const num = Number(string);
-  return Number.isInteger(num);
+	if (typeof string !== 'string') {
+		return false;
+	}
+	if (string.trim() === '') {
+		return false;
+	}
+	const num = Number(string);
+	return Number.isInteger(num);
 }
 
 $(document).ready(() => {
