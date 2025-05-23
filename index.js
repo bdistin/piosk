@@ -41,7 +41,7 @@ app.post('/config', (req, res) => {
 });
 
 app.post('/update', (req, res) => {
-	exec(__dirname + '/scripts/update.sh', err => {
+	exec('sudo ' + __dirname + '/scripts/update.sh', err => {
 		if (err) {
 			console.error(err);
 			res.status(500).send(err);
@@ -59,8 +59,31 @@ app.get('/sysinfo', (req, res) => {
 
 
 app.get('/stream', (req, res) => {
-	res.type('video/h264');
-	get('http://localhost:8080', message => message.pipe(res));
+    res.setHeader('Content-Type', 'video/webm');
+    const ffmpeg = spawn('ffmpeg', [
+        '-f', 'x11grab',
+        '-video_size', '1920x1080', // Adjust as needed
+        '-framerate', '30',
+        '-i', ':0.0',
+        '-c:v', 'libvpx-vp9',
+        '-b:v', '2M',
+        '-maxrate', '2M',
+        '-bufsize', '4M',
+        '-f', 'webm',
+        '-an', // No audio
+        '-'
+    ]);
+
+    ffmpeg.stdout.pipe(res);
+
+    ffmpeg.stderr.on('data', (data) => {
+        console.error(`FFmpeg stderr: ${data}`);
+    });
+
+    ffmpeg.on('close', (code) => {
+        console.log(`FFmpeg process exited with code ${code}`);
+        res.end();
+    });
 });
 
 app.get('/tv/status', (req, res) => {
