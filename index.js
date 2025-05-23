@@ -49,9 +49,13 @@ app.post('/update', (req, res) => {
 });
 
 app.get('/desktop', (req, res) => {
-	const child = exec('grim /home/admin/screenshot.png', [], { uid: 1000, gid: 1000 });
-	child.on('error', () => res.status(500).send('error taking screenshot'));
-	child.on('close', () => res.sendFile('/home/admin/screenshot.png'));
+	const child = exec('grim /home/admin/screenshot.png', { uid: 1000, gid: 1000 }, (err) => {
+		if (err) {
+			console.error(err);
+			res.status(500).send(err);
+		}
+		res.sendFile('/home/admin/screenshot.png');
+	});
 });
 
 app.get('/sysinfo', (req, res) => {
