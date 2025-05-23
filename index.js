@@ -57,19 +57,16 @@ app.get('/sysinfo', (req, res) => {
 });
 
 app.get('/stream', (req, res) => {
-	res.set('Content-Type', 'flv'); // Or 'video/mpeg' depending on output format
+	res.writeHead(200, {
+		'Content-Type': 'multipart/x-mixed-replace; boundary=--myboundary',
+	});
 
-	ffmpeg('/dev/video0') // Replace with your input device
-		.preset('flashvideo')
-		.on('start', function(commandLine) {
-			console.log('Spawned Ffmpeg with command: ' + commandLine);
-		})
-		.on('error', function(err, stdout, stderr) {
-			console.log('Error: ', err);
-			console.log('ffmpeg stdout: ', stdout);
-			console.log('ffmpeg stderr: ', stderr);
-		})
-		.pipe(res, { end: true });
+	const stream = fs.createReadStream('/tmp/desktop_stream');
+	stream.pipe(res);
+
+	stream.on('end', () => {
+		res.end();
+	});
 });
 
 app.get('/tv/status', (req, res) => {
