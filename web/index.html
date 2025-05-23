@@ -17,7 +17,7 @@
 		</nav>
 
 		<div id="player" class="my-5 container-md">
-			<video id="myVideo"></video>
+			<video id="myVideo" controls></video>
 			<div id="controls" class="input-group" hidden>
 				<span class="input-group-text">PowerStatus:&nbsp;<span id="power">unknown</span></span>
 				<button id="toggle-power" type="button" class="btn btn-danger">Power <span class="align-text-bottom">⏻</span></button>
@@ -57,8 +57,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="script.js"></script>
 		<script>
-			//const video = document.getElementById('myVideo');
-			//video.src = '/stream'
+			const video = document.getElementById('myVideo');
+			video.src = '/stream'
 			// video.play()
 		</script>
 	</body>
