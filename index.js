@@ -4,7 +4,7 @@ const Cec = require('cec-controller');
 const { exec } = require('child_process');
 const nfs = require('fs');
 const os = require('os');
-const { request } = require('http');
+const { get } = require('http');
 
 const cec = new Cec();
 
@@ -59,7 +59,7 @@ app.get('/sysinfo', (req, res) => {
 
 
 app.get('/stream', (req, res) => {
-	request('http://localhost:8080').pipe(res);
+	get('http://localhost:8080', message => message.pipe(res));
 });
 
 app.get('/tv/status', (req, res) => {
