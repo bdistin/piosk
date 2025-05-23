@@ -1,6 +1,6 @@
 const exp = require('express');
 const Cec = require('cec-controller');
-//const screenshot = require('screenshot-desktop-wayland');
+const screenshot = require('screenshot-desktop-wayland');
 const { exec } = require('child_process');
 const nfs = require('fs');
 const os = require('os');
@@ -49,12 +49,12 @@ app.post('/update', (req, res) => {
 	});
 });
 
-/*app.get('/desktop', (req, res) => {
+app.get('/desktop', (req, res) => {
 	screenshot().then(img => {
 		res.writeHead(200, { 'Content-Type': 'image/jpeg' });
     	img.pipe(res);
 	})
-});*/
+});
 
 app.get('/sysinfo', (req, res) => {
 	res.json({
