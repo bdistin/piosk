@@ -57,16 +57,7 @@ app.get('/sysinfo', (req, res) => {
 });
 
 app.get('/stream', (req, res) => {
-	res.writeHead(200, {
-		'Content-Type': 'multipart/x-mixed-replace; boundary=--myboundary',
-	});
-
-	const stream = fs.createReadStream('/tmp/desktop_stream');
-	stream.pipe(res);
-
-	stream.on('end', () => {
-		res.end();
-	});
+	res.redirect('http://localhost:8080');
 });
 
 app.get('/tv/status', (req, res) => {
