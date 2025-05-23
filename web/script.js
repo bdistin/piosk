@@ -38,6 +38,14 @@ const piosk = {
     
     	imageElement.attr('src', cleanSrc + '?' + timestamp);
 	},
+	getUpdateStatus() {
+		$.getJSON('/update')
+			.done(piosk.renderPage)
+			.fail(piosk.showErr);
+	},
+	renderUpdateStatus(data) {
+		$('#update-status').text(data);
+	},
 	renderTVStatus(data) {
 		$('#controller').show();
 		$('#power').text(data.powerStatus);
@@ -90,6 +98,7 @@ $(document).ready(() => {
 		.fail(piosk.showErr);
 
 	setInterval(piosk.refreshDesktop, 5000);
+	setInterval(piosk.getUpdateStatus, 5000);
 
 	$('#execute').on('click', (e) => {
 		if (!isValidURL($("#url").val())) {

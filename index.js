@@ -38,6 +38,16 @@ app.post('/config', (req, res) => {
 	});
 });
 
+app.get('/update', (req, res) => {
+	exec(__dirname + '/scripts/checkupdate.sh', (err, stdout) => {
+		if (err) {
+			console.error(err);
+			res.status(500).send(err);
+		}
+		res.status(200).send(stdout);
+	});
+});
+
 app.post('/update', (req, res) => {
 	exec(__dirname + '/scripts/update.sh', (err, stdout) => {
 		if (err) {
