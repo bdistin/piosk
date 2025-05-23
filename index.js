@@ -49,12 +49,12 @@ app.post('/update', (req, res) => {
 });
 
 app.get('/desktop', (req, res) => {
-	const child = exec('grim /home/admin/screenshot.png', (err) => {
+	const child = exec('grim /tmp/screenshot.png', (err) => {
 		if (err) {
 			console.error(err);
 			res.status(500).send(err);
 		}
-		res.sendFile('/home/admin/screenshot.png');
+		res.sendFile('/tmp/screenshot.png');
 	});
 });
 
