@@ -42,7 +42,6 @@ sed -e "s|PI_HOME|$PI_HOME|g" \
 	"$PIOSK_DIR/services/piosk-switcher.template" > "/etc/systemd/system/piosk-switcher.service"
 
 cp "$PIOSK_DIR/services/piosk-dashboard.template" /etc/systemd/system/piosk-dashboard.service
-cp "$PIOSK_DIR/services/piosk-video.template" /etc/systemd/system/piosk-video.service
 cp "$PIOSK_DIR/services/piosk-wlan0pwr.template" /etc/systemd/system/piosk-wlan0pwr.service
 
 echo -e "${INFO}Reloading systemd daemons...${RESET}"
