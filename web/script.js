@@ -36,22 +36,28 @@ const piosk = {
 		$.getJSON('/tv/status')
 			.done(piosk.renderTVStatus);		
 	},
-	showStatus(xhr) {
+	showErr(xhr) {
 		let tmpErr = $('#template-err').contents().clone();
 		tmpErr.html(xhr.responseText);
 		$('#settings').append(tmpErr);
 		setTimeout(_ => { $('.alert-danger').remove() }, 5000);
+	},
+	showSuc(xhr) {
+		let tmpErr = $('#template-suc').contents().clone();
+		tmpErr.html(xhr.responseText);
+		$('#settings').append(tmpErr);
+		setTimeout(_ => { $('.alert-success').remove() }, 5000);
 	}
 };
 
 $(document).ready(() => {
 	$.getJSON('/config')
 		.done(piosk.renderPage)
-		.fail(piosk.showStatus);
+		.fail(piosk.showErr);
 
 	$.getJSON('/sysinfo')
 		.done(piosk.renderInfo)
-		.fail(piosk.showStatus);
+		.fail(piosk.showErr);
 
 	// setInterval(piosk.refreshTVStatus, 30000);
 
@@ -67,8 +73,8 @@ $(document).ready(() => {
 			data: JSON.stringify(config),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			success: piosk.showStatus,
-			error: piosk.showStatus
+			success: piosk.showSuc,
+			error: piosk.showErr
 		});
 	});
 
@@ -76,8 +82,8 @@ $(document).ready(() => {
 		$.ajax({
 			url: '/tv/togglepower',
 			type: 'POST',
-			success: piosk.showStatus,
-			error: piosk.showStatus
+			success: piosk.showSuc,
+			error: piosk.showErr
 		});
 	});
 
@@ -85,8 +91,8 @@ $(document).ready(() => {
 		$.ajax({
 			url: '/update',
 			type: 'POST',
-			success: piosk.showStatus,
-			error: piosk.showStatus
+			success: piosk.showSuc,
+			error: piosk.showErr
 		});
 	});
 });
