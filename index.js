@@ -1,10 +1,8 @@
 const exp = require('express');
-const ffmpeg = require('fluent-ffmpeg');
 const Cec = require('cec-controller');
-const { exec } = require('child_process');
+const { exec, spawn } = require('child_process');
 const nfs = require('fs');
 const os = require('os');
-const { get } = require('http');
 
 const cec = new Cec();
 
