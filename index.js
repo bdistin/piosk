@@ -63,7 +63,7 @@ app.get('/sysinfo', (req, res) => {
 });
 
 
-app.get('/stream', (req, res) => {
+/*app.get('/stream', (req, res) => {
     res.setHeader('Content-Type', 'video/webm');
     const ffmpeg = spawn('ffmpeg', [
         '-f', 'x11grab',
@@ -89,7 +89,7 @@ app.get('/stream', (req, res) => {
         console.log(`FFmpeg process exited with code ${code}`);
         res.end();
     });
-});
+});*/
 
 app.get('/tv/status', (req, res) => {
 	res.json({ ...tv });
