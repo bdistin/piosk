@@ -62,5 +62,5 @@ echo -e "${INFO}Starting PiOSK daemons...${RESET}"
 systemctl start piosk-dashboard
 #systemctl start piosk-video
 
-echo -e "${SUCCESS}\tUpdate done! Restarting...${RESET}"
-reboot
+#echo -e "${SUCCESS}\tUpdate done! Restarting...${RESET}"
+#reboot

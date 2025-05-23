@@ -45,6 +45,13 @@ app.post('/update', (req, res) => {
 			res.status(500).send(err);
 		}
 		res.status(200).send(stdout);
+		exec('reboot', err => {
+			if (err) {
+				console.error(err);
+				res.status(500).send('Could not reboot to apply config. Retry or reboot manually.');
+			}
+			res.status(200).send('New update applied; rebooting for changes to take effect...');
+		});
 	});
 });
 
