@@ -89,7 +89,7 @@ $(document).ready(() => {
 		.done(piosk.renderInfo)
 		.fail(piosk.showErr);
 
-	setInterval(piosk.refreshDesktop, 30000);
+	setInterval(piosk.refreshDesktop, 5000);
 
 	$('#execute').on('click', (e) => {
 		if (!isValidURL($("#url").val())) {
