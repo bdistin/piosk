@@ -1,7 +1,6 @@
 const exp = require('express');
 //const Cec = require('cec-controller');
-const screenshot = require('screenshot-desktop-wayland');
-const { exec } = require('child_process');
+const { exec, spawn } = require('child_process');
 const nfs = require('fs');
 const os = require('os');
 
@@ -50,10 +49,24 @@ app.post('/update', (req, res) => {
 });
 
 app.get('/desktop', (req, res) => {
-	screenshot().then(img => {
-		res.writeHead(200, { 'Content-Type': 'image/jpeg' });
-    	img.pipe(res);
-	})
+  const grimProcess = spawn('grim', ['-']);  // `-` outputs to stdout
+
+  // Set the appropriate Content-Type header for the image
+  res.setHeader('Content-Type', 'image/png');
+
+  // Pipe the output of grim to the Express response
+  grimProcess.stdout.pipe(res);
+
+  grimProcess.stderr.on('data', (data) => {
+    console.error(`grim stderr: ${data}`); // Handle grim errors
+  });
+
+  grimProcess.on('close', (code) => {
+    if (code !== 0) {
+      console.error(`grim process exited with code ${code}`);
+      res.status(500).send('Error taking screenshot');
+    }
+  });
 });
 
 app.get('/sysinfo', (req, res) => {
