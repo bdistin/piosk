@@ -40,8 +40,8 @@ const piosk = {
 	},
 	getUpdateStatus() {
 		$.getJSON('/update')
-			.done(piosk.renderPage)
-			.fail(piosk.showErr);
+			.done(piosk.renderUpdateStatus)
+			.fail(piosk.renderUpdateStatus);
 	},
 	renderUpdateStatus(data) {
 		$('#update-status').text(data);
