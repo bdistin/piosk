@@ -6,10 +6,10 @@ const os = require('os');
 
 const cec = new Cec();
 
-let tv = null;
+let controller = null;
 
-cec.on('ready', controller => {
-	tv = controller.dev0;
+cec.on('ready', ctl => {
+	controller = ctl;
 });
 cec.on('error', console.error);
 
@@ -96,7 +96,7 @@ app.get('/sysinfo', (req, res) => {
 });
 
 app.get('/tv/status', (req, res) => {
-	res.json({ ...tv });
+	res.json({ ...controller });
 });
 
 app.post('/tv/togglepower', (req, res) => {
