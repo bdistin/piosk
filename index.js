@@ -6,10 +6,65 @@ const os = require('os');
 
 const cec = new Cec();
 
-let controller = null;
+cec.on('ready', controller => {
+	
+	app.get('/tv/status', (req, res) => {
+		res.json({ ...controller });
+	});
 
-cec.on('ready', ctl => {
-	controller = ctl;
+	if (controller.dev0) {
+
+		app.post('/tv/power/on', async (req, res) => {
+			try {
+				await controller.dev0.turnOn();
+				await controller.setActive();
+				res.status(200).send('TV power has been turned on.');	
+			} catch (err) {
+				res.status(500).send('Could not send input key.');
+			}
+		});
+
+		app.post('/tv/power/off', async (req, res) => {
+			try {
+				await controller.dev0.turnOff();
+				res.status(200).send('TV has been turned off.');	
+			} catch (err) {
+				res.status(500).send('Could not send input key.');
+			}
+		});
+
+		app.post('/tv/power/toggle', async (req, res) => {
+			res.redirect(302, controller.dev0.powerStatus === 'on' ? '/tv/power/off' : '/tv/power/on')
+		});
+
+		app.post('/tv/volume/up', async (req, res) => {
+			try {
+				await controller.volumeUp();
+				res.status(200).send('TV volume has increased.');	
+			} catch (err) {
+				res.status(500).send('Could not send input key.');
+			}
+		});		
+		
+		app.post('/tv/volume/down', async (req, res) => {
+			try {
+				await controller.dev0.volumeDown();
+				res.status(200).send('TV volume has decreased.');	
+			} catch (err) {
+				res.status(500).send('Could not send input key.');
+			}
+		});
+		
+		app.post('/tv/volume/mute', async (req, res) => {
+			try {
+				await controller.dev0.mute();
+				res.status(200).send('TV has been muted.');	
+			} catch (err) {
+				res.status(500).send('Could not send input key.');
+			}
+		});
+
+	}
 });
 cec.on('error', console.error);
 
@@ -95,17 +150,5 @@ app.get('/sysinfo', (req, res) => {
 	});
 });
 
-app.get('/tv/status', (req, res) => {
-	res.json({ ...controller });
-});
-
-app.post('/tv/togglepower', async (req, res) => {
-	try {
-		const success = await tv.togglePower();
-		res.status(200).send('TV power has been toggled.');	
-	} catch (err) {
-		res.status(500).send('Could not send input key.');
-	}
-});
 
 app.listen(80, console.error);
