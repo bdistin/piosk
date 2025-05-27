@@ -57,7 +57,7 @@ const piosk = {
 	renderTVStatus(data) {
 		if (data.dev0) {
 			$('#tv-controls').show();
-			$('#tv-power-status').text(data.powerStatus);
+			$('#tv-power-status').text(data.dev0.powerStatus);
 		} else {
 			$('#tv-controls').hide();
 		}
