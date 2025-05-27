@@ -99,13 +99,13 @@ app.get('/tv/status', (req, res) => {
 	res.json({ ...controller });
 });
 
-app.post('/tv/togglepower', (req, res) => {
-	tv.togglePower().then(success => {
-		if(success)
-			res.status(200).send('TV power has been toggled.');
-		else
-			res.status(500).send('Could not send input key.');
-	});
+app.post('/tv/togglepower', async (req, res) => {
+	try {
+		const success = await tv.togglePower();
+		res.status(200).send('TV power has been toggled.');	
+	} catch (err) {
+		res.status(500).send('Could not send input key.');
+	}
 });
 
 app.listen(80, console.error);
