@@ -1,17 +1,17 @@
 const exp = require('express');
-//const Cec = require('cec-controller');
+const Cec = require('cec-controller');
 const { exec } = require('child_process');
 const nfs = require('fs');
 const os = require('os');
 
-//const cec = new Cec();
+const cec = new Cec();
 
-//let tv = null;
+let tv = null;
 
-//cec.on('ready', controller => {
-//	tv = controller.dev0;
-//});
-//cec.on('error', console.error);
+cec.on('ready', controller => {
+	tv = controller.dev0;
+});
+cec.on('error', console.error);
 
 const app = exp();
 
@@ -95,7 +95,7 @@ app.get('/sysinfo', (req, res) => {
 	});
 });
 
-/*app.get('/tv/status', (req, res) => {
+app.get('/tv/status', (req, res) => {
 	res.json({ ...tv });
 });
 
@@ -106,6 +106,6 @@ app.post('/tv/togglepower', (req, res) => {
 		else
 			res.status(500).send('Could not send input key.');
 	});
-});*/
+});
 
 app.listen(80, console.error);
