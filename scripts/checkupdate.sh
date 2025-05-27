@@ -15,5 +15,5 @@ if [ "$local_commit" = "$remote_commit" ]; then
 elif git merge-base --is-ancestor "$local_commit" "$remote_commit"; then
   echo "There is an update available for PiOSK."
 else
-  echo "The local PiOSK is ahead of the online version."
+  echo "The local PiOSK is ahead of the online version. Fix this by connecting to ssh and running `git reset --hard origin/main`"
 fi

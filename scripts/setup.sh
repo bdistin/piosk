@@ -36,7 +36,7 @@ fi
 
 echo -e "${INFO}Installing dependencies...${RESET}"
 apt update
-apt install -y git jq wtype nodejs npm xprintidle libcap2-bin
+apt install -y git jq wtype nodejs npm xprintidle libcap2-bin cec-utils
 
 echo -e "${INFO}Cloning repository...${RESET}"
 git clone https://github.com/bdistin/piosk.git "$PIOSK_DIR"
@@ -47,10 +47,6 @@ setcap cap_net_bind_service=+ep `readlink -f \`which node\``
 
 echo -e "${INFO}Make PiOSK directory writable without SUDO...${RESET}"
 chown -R $USER:$USER $PIOSK_DIR
-
-# echo -e "${INFO}Checking out latest release...${RESET}"
-# git checkout devel
-# git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
 
 echo -e "${INFO}Installing npm dependencies...${RESET}"
 npm i
