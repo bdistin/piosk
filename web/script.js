@@ -2,6 +2,7 @@ const piosk = {
 	dataRefresh() {
 		piosk.refreshDesktop();
 		piosk.getUpdateStatus();
+		piosk.refreshTVStatus();
 	},
 	renderPage(data) {
 		$('#url').val(data.url);
@@ -54,12 +55,17 @@ const piosk = {
 		$('#update-status').text(data.status);
 	},
 	renderTVStatus(data) {
-		$('#controller').show();
-		$('#power').text(data.powerStatus);
+		if (data.dev0) {
+			$('#tv-controls').show();
+			$('#tv-power-status').text(data.powerStatus);
+		} else {
+			$('#tv-controls').hide();
+		}
 	},
 	refreshTVStatus() {
 		$.getJSON('/tv/status')
-			.done(piosk.renderTVStatus);		
+			.done(piosk.renderTVStatus)
+			.fail(piosk.renderTVStatus);		
 	},
 	showErr(xhr) {
 		const tmpErr = $('#template-err').contents().clone();
@@ -134,9 +140,36 @@ $(document).ready(() => {
 		});
 	});
 
-	$('#toggle-power').on('click', (e) => {
+	$('#tv-power').on('click', (e) => {
 		$.ajax({
-			url: '/tv/togglepower',
+			url: '/tv/power/toggle',
+			type: 'POST',
+			success: piosk.showSuc,
+			error: piosk.showErr
+		});
+	});
+
+	$('#tv-volume-up').on('click', (e) => {
+		$.ajax({
+			url: '/tv/volume/up',
+			type: 'POST',
+			success: piosk.showSuc,
+			error: piosk.showErr
+		});
+	});
+
+	$('#tv-volume-mute').on('click', (e) => {
+		$.ajax({
+			url: '/tv/volume/mute',
+			type: 'POST',
+			success: piosk.showSuc,
+			error: piosk.showErr
+		});
+	});
+
+	$('#tv-volume-down').on('click', (e) => {
+		$.ajax({
+			url: '/tv/power/down',
 			type: 'POST',
 			success: piosk.showSuc,
 			error: piosk.showErr

@@ -42,7 +42,7 @@ cp "$PIOSK_DIR/services/piosk-wlan0pwr.template" /etc/systemd/system/piosk-wlan0
 
 echo -e "${INFO}Installing PiOSK cron tasks...${RESET}"
 cp "$PIOSK_DIR/cron/cec-schedule" /etc/cron.d/piosk
-touch /etc/crontab
+touch /etc/cron.d
 
 echo -e "Reloading systemd daemons..."
 systemctl daemon-reload
