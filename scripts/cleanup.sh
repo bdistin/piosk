@@ -41,6 +41,9 @@ rm /etc/systemd/system/piosk-switcher.service
 rm /etc/systemd/system/piosk-dashboard.service
 rm /etc/systemd/system/piosk-wlan0pwr.service
 
+echo -e "${INFO}Removing PiOSK cron tasks...${RESET}"
+rm /etc/cron.d/piosk
+
 echo -e "${INFO}Reloading systemd daemons...${RESET}"
 systemctl daemon-reload
 

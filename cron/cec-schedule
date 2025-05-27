@@ -1,0 +1,5 @@
+0 5 * * 1-5 root cec-ctl --playback && cec-ctl -s -t0 --image-view-on --active-source phys-addr=1.0.0.0 >/dev/null 2>&1
+33 12 * * 1-5 root cec-ctl --playback && cec-ctl -s -t0 --image-view-on --active-source phys-addr=1.0.0.0 >/dev/null 2>&1
+30 4 * * 1-5 root cec-ctl --playback && cec-ctl -s -t0 --standby >/dev/null 2>&1
+0 12 * * 1-5 root cec-ctl --playback && cec-ctl -s -t0 --standby >/dev/null 2>&1
+*/5 * * * * root /opt/piosk/scripts/checkwifi.sh >/dev/null 2>&1

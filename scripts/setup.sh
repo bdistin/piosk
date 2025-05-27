@@ -82,6 +82,10 @@ sed -e "s|PI_HOME|$PI_HOME|g" \
 
 cp "$PIOSK_DIR/services/piosk-wlan0pwr.template" /etc/systemd/system/piosk-wlan0pwr.service
 
+echo -e "${INFO}Installing PiOSK cron tasks...${RESET}"
+cp "$PIOSK_DIR/cron/cec-schedule" /etc/cron.d/piosk
+touch /etc/cron.d
+
 echo -e "${INFO}Reloading systemd daemons...${RESET}"
 systemctl daemon-reload
 
