@@ -142,7 +142,7 @@ $(document).ready(() => {
 
 	$('#tv-power').on('click', (e) => {
 		$.ajax({
-			url: '/tv/power/toggle',
+			url: $('#tv-power-status').text() !== 'on' ? '/tv/power/on' : '/tv/power/off',
 			type: 'POST',
 			success: piosk.showSuc,
 			error: piosk.showErr

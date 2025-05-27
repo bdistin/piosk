@@ -33,10 +33,6 @@ cec.on('ready', controller => {
 			}
 		});
 
-		app.post('/tv/power/toggle', async (req, res) => {
-			res.redirect(302, controller.dev0.powerStatus === 'on' ? '/tv/power/off' : '/tv/power/on')
-		});
-
 		app.post('/tv/volume/up', async (req, res) => {
 			try {
 				await controller.volumeUp();
@@ -48,7 +44,7 @@ cec.on('ready', controller => {
 		
 		app.post('/tv/volume/down', async (req, res) => {
 			try {
-				await controller.dev0.volumeDown();
+				await controller.volumeDown();
 				res.status(200).send('TV volume has decreased.');	
 			} catch (err) {
 				res.status(500).send('Could not send input key.');
@@ -57,7 +53,7 @@ cec.on('ready', controller => {
 		
 		app.post('/tv/volume/mute', async (req, res) => {
 			try {
-				await controller.dev0.mute();
+				await controller.mute();
 				res.status(200).send('TV has been muted.');	
 			} catch (err) {
 				res.status(500).send('Could not send input key.');
