@@ -3,23 +3,12 @@
 # @TODO: fetch the user dynamically or from config
 export XDG_RUNTIME_DIR=/run/user/1000
 
-# THIS IS NOT THE BEST WAY TO SWITCH & REFRESH TABS BUT IT WORKS
-# should parameterize cycle count & sleep delay with config.json
+IDLE_TIMEOUT=$(jq -r '.page_timeout' /opt/piosk/config.json)
+IDLE=$(xprintidle) / 1000
 
-# count the number of URLs, that are configured to cycle through
-URLS=$(jq -r '.urls | length' /opt/piosk/config.json)
-TIMEOUT=$(jq '.settings.page_timeout' /opt/piosk/config.json)
-
-# swich tabs each 10s, refresh tabs each 10th cycle & then reset
-for ((TURN=1; TURN<=$((10*URLS)); TURN++)) do
-  if [ $TURN -le $((10*URLS)) ]; then
-    wtype -M ctrl -P Tab
-    if [ $TURN -gt $((9*URLS)) ]; then
-      wtype -M ctrl r
-      if [ $TURN -eq $((10*URLS)) ]; then
-        (( TURN=0 ))
-      fi
-    fi
-  fi
-  sleep $TIMEOUT
-done
+if [ $IDLE -ge $IDLE_TIMEOUT ]; then
+    wtype -M ctrl r -m ctrl
+	sleep $IDLE_TIMEOUT
+elif
+	sleep $($IDLE_TIMEOUT - $IDLE)
+fi

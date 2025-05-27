@@ -14,10 +14,10 @@ DEBUG='\033[1;36m'   # Bold Cyan
 
 echo -e "${INFO}Checking superuser privileges...${RESET}"
 if [ "$EUID" -ne 0 ]; then
-  echo -e "${ERROR}Not running as superuser. Escalating...${RESET}"
+	echo -e "${ERROR}Not running as superuser. Escalating...${RESET}"
 
-  sudo "$0" "$@" # Re-execute the script as superuser
-  exit $?  # Exit with the status of the sudo command
+	sudo "$0" "$@" # Re-execute the script as superuser
+	exit $?        # Exit with the status of the sudo command
 fi
 
 echo -e "${INFO}Backing up configuration...${RESET}"
@@ -27,16 +27,19 @@ echo -e "${INFO}Stopping PiOSK services...${RESET}"
 systemctl stop piosk-runner
 systemctl stop piosk-switcher
 systemctl stop piosk-dashboard
+systemctl stop piosk-wlan0pwr
 
 echo -e "${INFO}Disabling PiOSK services...${RESET}"
 systemctl disable piosk-runner
 systemctl disable piosk-switcher
 systemctl disable piosk-dashboard
+systemctl disable piosk-wlan0pwr
 
 echo -e "${INFO}Removing PiOSK services...${RESET}"
 rm /etc/systemd/system/piosk-runner.service
 rm /etc/systemd/system/piosk-switcher.service
 rm /etc/systemd/system/piosk-dashboard.service
+rm /etc/systemd/system/piosk-wlan0pwr.service
 
 echo -e "${INFO}Reloading systemd daemons...${RESET}"
 systemctl daemon-reload

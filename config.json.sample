@@ -1,10 +1,4 @@
 {
-    "urls": [
-        {
-            "url": "http://localhost/setup"
-        }
-    ],
-    "settings":{
-        "page_timeout": 10
-    }
+    "url": "http://localhost/setup.html",
+    "page_timeout": 1800
 }

@@ -5,7 +5,11 @@ After=network.target
 [Service]
 Type=simple
 ExecStart=npm start --prefix /opt/piosk/
-User=root
+User=PI_USER
+WorkingDirectory=PI_HOME
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=PI_HOME/.Xauthority
+Environment=XDG_RUNTIME_DIR=/run/user/PI_SUID
 Restart=on-failure
 
 [Install]
