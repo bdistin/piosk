@@ -99,8 +99,6 @@ app.get('/sysinfo', (req, res) => {
 	res.json({ ...tv });
 });
 
-//test
-
 app.post('/tv/togglepower', (req, res) => {
 	tv.togglePower().then(success => {
 		if(success)
