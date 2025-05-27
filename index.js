@@ -18,7 +18,7 @@ cec.on('ready', controller => {
 			try {
 				await controller.dev0.turnOn();
 				await controller.setActive();
-				res.status(200).send('TV power has been turned on.');	
+				res.status(200).send('TV has been turned on.');	
 			} catch (err) {
 				res.status(500).send('Could not send input key.');
 			}
