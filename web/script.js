@@ -169,7 +169,7 @@ $(document).ready(() => {
 
 	$('#tv-volume-down').on('click', (e) => {
 		$.ajax({
-			url: '/tv/power/down',
+			url: '/tv/volume/down',
 			type: 'POST',
 			success: piosk.showSuc,
 			error: piosk.showErr
