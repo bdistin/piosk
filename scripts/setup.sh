@@ -46,7 +46,7 @@ echo -e "${INFO}Allowing Node to bind port 80 without SUDO...${RESET}"
 setcap cap_net_bind_service=+ep `readlink -f \`which node\`` 
 
 echo -e "${INFO}Make PiOSK directory writable without SUDO...${RESET}"
-chown -R $USER:$USER $PIOSK_DIR
+chown -R $SUDO_USER:$SUDO_USER $PIOSK_DIR
 
 echo -e "${INFO}Installing npm dependencies...${RESET}"
 npm i
