@@ -9,7 +9,7 @@ IDLE=$(xprintidle) / 1000
 while true
 do
 	if [ $IDLE -ge $IDLE_TIMEOUT ]; then
-    	wtype -M ctrl r -m ctrl
+    	curl -X POST http://localhost/refresh
 		sleep $IDLE_TIMEOUT
 	elif
 		sleep $($IDLE_TIMEOUT - $IDLE)
