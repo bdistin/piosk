@@ -7,11 +7,11 @@ IDLE_TIMEOUT=$(jq -r '.page_timeout' /opt/piosk/config.json)
 
 while true
 do
-	IDLE=$(xprintidle) / 1000
-	if [ $IDLE -ge $IDLE_TIMEOUT ]; then
+	IDLE=$(xprintidle / 1000)
+	if [ "$IDLE" -ge "$IDLE_TIMEOUT" ]; then
 		curl -X POST http://localhost/refresh
-		sleep $IDLE_TIMEOUT
-	elif
-		sleep $($IDLE_TIMEOUT - $IDLE)
+		sleep "$IDLE_TIMEOUT"
+	else
+		sleep "$("$IDLE_TIMEOUT" - "$IDLE")"
 	fi
 done
